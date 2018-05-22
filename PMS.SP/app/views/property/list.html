@@ -1,0 +1,40 @@
+﻿
+<div class="row">
+    <div class="col-lg-4">
+        <p>
+            <a href="#/property/add" class="btn btn-link">
+                <span class="fa fa-plus" aria-hidden="true"></span>
+                Add new
+            </a>
+        </p>
+    </div>
+    <div class="col-lg-8">
+        <form class="form-inline" role="form" novalidate="novalidate" ng-submit="list()" disable-auto-validate="true" validate-on-form-submit="true">
+            <div class="input-group pull-right">
+                <div class="form-group">
+                    <input type="search" data-ng-model="search" ng-minlength="3" class="form-control" placeholder="Search for..." required>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+
+            <th>
+                Name
+            </th>
+
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in propertyData">
+            <td>
+                {{item.name}}
+            </td>
+
+        </tr>
+    </tbody>
+</table>

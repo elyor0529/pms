@@ -1,0 +1,123 @@
+﻿<div class="row">
+    <div class="col-lg-4">
+        <p>
+            <a href="#/tenant/add" class="btn btn-link">
+                <span class="fa fa-plus" aria-hidden="true"></span>
+                Add new
+            </a>
+        </p>
+    </div>
+    <div class="col-lg-8">
+        <form class="form-inline" role="form" novalidate="novalidate" ng-submit="list()" disable-auto-validate="true" validate-on-form-submit="true">
+            <div class="form-group pull-right">
+                <div class="input-group">
+                    <input type="search" data-ng-model="search" ng-minlength="3" class="form-control" placeholder="Search for..." required>
+                    <span class="input-group-btn">
+                        <button class="btn btn-default" type="submit">
+                            <span class="fa fa-search" aria-hidden="true"></span>
+                        </button>
+                        <button class="btn btn-primary" type="reset" ng-click="reset()">
+                            <span class="fa fa-list" aria-hidden="true"></span>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<table class="table table-bordered table-responsive">
+    <thead>
+        <tr>
+            <th>
+                Tenant
+            </th>
+            <th>
+                Property/Unit
+            </th>
+            <th>
+                Primary contact
+            </th>
+            <th>
+                Expiring in
+            </th>
+            <th>
+                Rent
+            </th>
+            <th>
+                Files/Attachments
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="item in tenantData">
+            <td>
+                {{item.tenant}}
+                <ul>
+                    <li ng-repeat="subTenant in item.subTenants">{{subTenant}}</li>
+                </ul>
+            </td>
+            <td>
+                <p>{{item.property}} <span ng-show="item.hasLeaseEnd"> - {{item.unit}}</span></p>
+                <p ng-show="item.hasLeaseEnd">
+                    {{item.leaseDetails.agreement}}  &nbsp; {{item.leaseDetails.date}} &nbsp;{{item.leaseDetails.expire}}
+                </p>
+            </td>
+            <td>
+                <p ng-show="item.primaryContacts.cell">
+                    <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+                    {{item.primaryContacts.cell}}
+                </p>
+                <p ng-show="item.primaryContacts.home">
+                    <span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span>
+                    {{item.primaryContacts.home}}
+                </p>
+                <p ng-show="item.primaryContacts.mail">
+                    <a href="#/tenant/email?id={{item.id}}">
+                        <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
+                        {{item.primaryContacts.mail}}
+                    </a>
+                </p>
+            </td>
+            <td>
+                <strong class="text-danger" ng-show="item.expiringInDays>0 && item.expiringInDays<90">{{item.expiringInDays}} days</strong>
+                <strong class="text-success" ng-show="item.expiringInDays>=90">{{item.expiringInDays}} days</strong>
+            </td>
+            <td>{{item.rent|currency}}</td>
+            <td>
+                <p ng-repeat="attachment in item.attachments">
+                    <a href="{{downloadUrl}}?path={{attachment}}" target="_blank">
+                        <span class="fa fa-file" aria-hidden="true"></span>
+                        {{attachment}}
+                    </a>
+                </p>
+            </td>
+            <td>
+                <a href="#/tenant/edit?id={{item.id}}" class="btn btn-link">
+                    <span class="fa fa-edit" aria-hidden="true"></span>
+                    Edit
+                </a>
+                <a href="#/tenant/remove?id={{item.id}}" class="btn btn-link" onclick="return confirm('You are sure?');">
+                    <span class="fa fa-trash" aria-hidden="true"></span>
+                    Delete
+                </a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="row">
+    <div class="col-lg-4">
+        <p>Showing {{pager.firstItemOnPage}} to {{pager.lastItemOnPage}} of {{pager.totalItemCount}} entries</p>
+    </div>
+    <div class="col-lg-8">
+        <ul class="pagination  pull-right">
+            <li class="previous disabled" ng-show="pager.isFirstPage||!pager.hasPreviousPage"><a><span aria-hidden="true">&larr;</span> Previous</a></li>
+            <li class="previous" ng-hide="pager.isFirstPage||!pager.hasPreviousPage"><a href="#/tenant/list?page={{pager.pageNumber-1}}"><span aria-hidden="true">&larr;</span> Previous</a></li>
+            <li ng-repeat="n in range(1,pager.pageCount)" ng-class="{'active': pager.pageNumber == n}"><a href="#/tenantlist?page={{n}}">{{n}}</a></li>
+            <li class="next disabled" ng-show="pager.isLastPage||!pager.hasNextPage"><a>Next <span aria-hidden="true">&rarr;</span></a></li>
+            <li class="next" ng-hide="pager.isLastPage||!pager.hasNextPage"><a href="#/tenant/list?page={{pager.pageNumber+1}}">Next <span aria-hidden="true">&rarr;</span></a></li>
+        </ul>
+    </div>
+</div>

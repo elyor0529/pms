@@ -1,0 +1,44 @@
+﻿
+<form class="form-horizontal" role="form">
+
+    <input type="hidden" ng-model="emailData.id" />
+
+    <div class="form-group">
+        <label for="from" class="col-md-2 control-label">From:</label>
+        <div class="col-md-10">
+            <input type="email" class="form-control disabled" data-ng-model="emailData.from" name="from" id="from" required readonly />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="to" class="col-md-2 control-label">To:</label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" data-ng-model="emailData.to" name="to" id="to" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="subject" class="col-md-2 control-label">Subject:</label>
+        <div class="col-md-10">
+            <input type="text" class="form-control" data-ng-model="emailData.subject" name="subject" id="subject" required />
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="body" class="col-md-2 control-label">Body:</label>
+        <div class="col-md-10">
+            <div text-angular ng-model="emailData.body" name="body" id="body" ta-text-editor-class="border-around" ta-html-editor-class="border-around"></div>
+        </div>
+    </div>
+
+    <div class="page-header small">
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-default" data-ng-click="send()" value="Send message" />
+            <a href="#/tenant/list" class="btn btn-warning">Cancel</a>
+        </div>
+    </div>
+
+</form>
